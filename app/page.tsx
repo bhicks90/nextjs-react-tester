@@ -6,6 +6,8 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
+import { CompaniesTable } from "@/components/ui/Companies/table";
+
 export default function Home() {
   return (
     <div className="min-h-screen min-w-screen bg-gradient-to-tl from-blue-400 to-blue-700 text-white space-y-6">
@@ -22,7 +24,9 @@ export default function Home() {
             <CardTitle></CardTitle>
             <CardDescription></CardDescription>
           </CardHeader>
-          <CardContent>{/* content goes here */}</CardContent>
+          <CardContent>
+            <CompaniesTable/>
+          </CardContent>
         </Card>
       </div>
     </div>
