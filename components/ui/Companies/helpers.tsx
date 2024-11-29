@@ -1,31 +1,27 @@
 import { Company } from "@/lib/useCompanies";
 
 const DEFAULT_CURRENCY = 'USD';
+const FORMAT_STYLE = 'currency';
 
-export const formatCurrency = (value: number, currency: string = DEFAULT_CURRENCY): string => {
-    const formatter = new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: currency,
-    });
-    return formatter.format(value);
+const currencyFormatter = new Intl.NumberFormat('en-US', {
+  style: FORMAT_STYLE,
+  currency: DEFAULT_CURRENCY,
+});
+
+export const formatCurrency = (value: number): string => {
+    return currencyFormatter.format(value);
 };
 
 export const getTotalRevenue = ( companies: Company | null ) => {
-    let revenue;
-
-    companies instanceof Array ? 
-        revenue = companies.reduce((sum, company) => sum + company.revenue, 0)
+    return companies instanceof Array ? 
+        companies.reduce((sum, company) => sum + company.revenue, 0)
         : 
         0
-    return formatCurrency(revenue);
 }
 
 export const getTotalEmployees = ( companies: Company | null ) => {
-    let employees;
-
-    companies instanceof Array ? 
-        employees = companies.reduce((sum, company) => sum + company.employees, 0)
+    return companies instanceof Array ? 
+        companies.reduce((sum, company) => sum + company.employees, 0)
         : 
         0
-    return employees;
 }

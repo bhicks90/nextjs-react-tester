@@ -36,12 +36,8 @@ function useCompanies() {
                 setData(data);
             } catch (error) {
                 if (error instanceof Error) {
-                    const customError: CustomError = {
-                        message: error.message,
-                    };
                     setError(error);
                 }
-            
             } finally {
                 setIsLoading(false);
             }

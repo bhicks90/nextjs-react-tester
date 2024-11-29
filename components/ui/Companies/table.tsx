@@ -26,7 +26,7 @@ export function CompaniesTable() {
     }
 
     if (error) {
-        return <Alert className="p-4 mb-4 text-red-800  bg-red-50">{error.message}</Alert>;  
+        return <Alert className="p-4 mb-4 text-red-800 bg-red-50">{error.message}</Alert>;  
     }
 
     return (
@@ -53,7 +53,7 @@ export function CompaniesTable() {
                             </TableRow>
                         ))
                         : 
-                        null
+                        <></>
                 }
             </TableBody>
 
@@ -61,7 +61,7 @@ export function CompaniesTable() {
                 <TableRow>
                     <TableCell></TableCell>
                     <TableCell>
-                        {getTotalRevenue(companies)}
+                        {formatCurrency(getTotalRevenue(companies))}
                     </TableCell>
                     <TableCell></TableCell>
                     <TableCell>
