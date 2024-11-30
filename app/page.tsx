@@ -6,7 +6,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-import { CompaniesTable } from "@/components/ui/Companies/table";
+import { CompaniesTable } from "@/components/ui/companies/table";
 
 export default function Home() {
   return (

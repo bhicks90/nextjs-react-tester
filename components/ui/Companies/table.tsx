@@ -1,22 +1,28 @@
 "use client"
 
+import React from "react";
 import { Alert } from "@/components/ui/alert";
-import { formatCurrency, getTotalEmployees, getTotalRevenue } from "@/components/ui/Companies/helpers";
-import {
-    Table,
-    TableBody,
-    TableCaption,
-    TableCell,
-    TableFooter,
-    TableHead,
-    TableHeader,
-    TableRow
-} from "@/components/ui/table";
+import { formatCurrency, getTotalEmployees, getTotalRevenue } from "@/components/ui/companies/helpers";
+
 import useCompanies, { Company } from "@/lib/useCompanies";
-import LoadingSpinner from "../loadingspinner";
+import LoadingSpinner from "@/components/ui/loadingspinner";
+import Link from "@/components/ui/link";
+import { GenericTable } from "@/components/ui/generic-table";
 
 const TABLE_CAPTION_TEXT = "A list of companies";
-const HEADERS = ["Company", "Revenue", "Location", "Employee Count", "Description", "Website"];
+const TABLE_HEADERS = ["Company", "Description", "Revenue", "Location", "Employee Count", "Website"];
+const TABLE_DATA_KEYS = ["id", "name", "description", "revenue", "location", "employees", "website"];
+const TABLE_COMPONENT_KEYS = ["website"];
+
+type UpdatedRow = {
+    website: string | {};
+    name: string;
+    id: number | string;
+    revenue:  number | string;
+    location: string;
+    employees: number | string;
+    description: string;
+}
 
 export function CompaniesTable() {
     const { data: companies, isLoading, error } = useCompanies();
@@ -29,49 +35,42 @@ export function CompaniesTable() {
         return <Alert className="p-4 mb-4 text-red-800 bg-red-50">{error.message}</Alert>;  
     }
 
-    return (
-        <Table>
-            <TableCaption>{TABLE_CAPTION_TEXT}</TableCaption>
+    const TotalEmployees = getTotalEmployees(companies);
+    const TotalRevenue = formatCurrency(getTotalRevenue(companies));
+    const TABLE_FOOTER_ROW = ["", "", TotalRevenue, "", TotalEmployees, ""];
 
-            <TableHeader>
-                {HEADERS.map( header => (
-                    <TableHead>{header}</TableHead>
-                ))}
-            </TableHeader>
+    const companyTableData = {
+        caption_text: TABLE_CAPTION_TEXT,
+        headers: TABLE_HEADERS, 
+        tableBodyRows: getUpdatedRows(companies), 
+        tableFooterRow: TABLE_FOOTER_ROW,
+        tableDataKeys: TABLE_DATA_KEYS,
+        tableComponentKeys: TABLE_COMPONENT_KEYS
+    };
 
-            <TableBody>
-                {
-                    companies instanceof Array? 
-                        companies.map( ({id, name, revenue, location, employees, description, website}: Company) => (
-                            <TableRow key={id}>
-                                <TableCell>{name}</TableCell>
-                                <TableCell>{formatCurrency(revenue)}</TableCell>
-                                <TableCell>{location}</TableCell>
-                                <TableCell>{employees}</TableCell>
-                                <TableCell>{description}</TableCell>
-                                <TableCell>{website}</TableCell>
-                            </TableRow>
-                        ))
-                        : 
-                        <></>
-                }
-            </TableBody>
+    return <GenericTable {...companyTableData}/>
 
-            <TableFooter>
-                <TableRow>
-                    <TableCell></TableCell>
-                    <TableCell>
-                        {formatCurrency(getTotalRevenue(companies))}
-                    </TableCell>
-                    <TableCell></TableCell>
-                    <TableCell>
-                        {getTotalEmployees(companies)}
-                    </TableCell>
-                    <TableCell></TableCell>
-                    <TableCell></TableCell>
-                </TableRow>
-            </TableFooter>
-
-        </Table>
-    )
 }
+
+// adds link and formats currency
+const getUpdatedRows = (rows : Company | null): UpdatedRow => {
+    let updatedRows;
+    
+    rows instanceof Array?
+    updatedRows = rows.map( row => {
+            const tableComponentConfig = {
+                component: Link,         
+                props: { url: row.website }
+            };
+
+            return { 
+                ...row, 
+                website: tableComponentConfig,
+                revenue: formatCurrency(row.revenue) 
+            };
+        })
+        :
+        updatedRows = [];
+
+    return updatedRows;
+};

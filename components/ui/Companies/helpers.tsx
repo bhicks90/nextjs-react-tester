@@ -1,9 +1,10 @@
 import { Company } from "@/lib/useCompanies";
 
-const DEFAULT_CURRENCY = 'USD';
-const FORMAT_STYLE = 'currency';
+const DEFAULT_CURRENCY = "USD";
+const FORMAT_STYLE = "currency";
+const LANGUAGE_CODE = "en-US";
 
-const currencyFormatter = new Intl.NumberFormat('en-US', {
+const currencyFormatter = new Intl.NumberFormat(LANGUAGE_CODE, {
   style: FORMAT_STYLE,
   currency: DEFAULT_CURRENCY,
 });

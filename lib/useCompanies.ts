@@ -1,25 +1,26 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
-export interface Company {
+export type Company = {
     name: string;
-    id: number
-    revenue: number
-    location: string
-    employees: number
-    description: string
-    website: string
-}
+    id: number;
+    revenue: number;
+    location: string;
+    employees: number;
+    description: string;
+    website: string;
+};
+ 
 
-interface CustomError {
+type CustomError = {
     message: string;
-}
+};
   
   
 function useCompanies() {
     const [data, setData] = useState<Company | null>(null);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<CustomError | null>(null);
-    const URL = 'https://venefish.enesien.com/api/companies';
+    const URL = "https://venefish.enesien.com/api/companies";
 
     useEffect(() => {
         const fetchData = async () => {
@@ -29,7 +30,7 @@ function useCompanies() {
                 const response = await fetch(URL);
 
                 if (!response.ok) {
-                    throw new Error('Network response was not ok');
+                    throw new Error("Network response was not ok");
                 }
                 
                 const data = await response.json();
@@ -44,7 +45,7 @@ function useCompanies() {
         };
     
         fetchData();
-    }, [URL]);
+    }, []);
 
     return { data, isLoading, error };
 }
