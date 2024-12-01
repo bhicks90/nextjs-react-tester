@@ -5,7 +5,7 @@ import { Alert } from "@/components/ui/alert";
 import { formatCurrency, getTotalEmployees, getTotalRevenue } from "@/components/ui/companies/helpers";
 
 import useCompanies, { Company } from "@/lib/useCompanies";
-import LoadingSpinner from "@/components/ui/loadingspinner";
+import LoadingSpinner from "@/components/ui/loading-spinner";
 import Link from "@/components/ui/link";
 import { GenericTable } from "@/components/ui/generic-table";
 
@@ -40,7 +40,7 @@ export function CompaniesTable() {
     const TABLE_FOOTER_ROW = ["", "", TotalRevenue, "", TotalEmployees, ""];
 
     const companyTableData = {
-        caption_text: TABLE_CAPTION_TEXT,
+        captionText: TABLE_CAPTION_TEXT,
         headers: TABLE_HEADERS, 
         tableBodyRows: getUpdatedRows(companies), 
         tableFooterRow: TABLE_FOOTER_ROW,

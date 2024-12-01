@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/table";
 
 type  GenericTable = {
-    caption_text?: string;
+    captionText?: string;
     headers?: string[];
     tableBodyRows: any[];
     tableFooterRow?: [];
@@ -34,7 +34,7 @@ type ComponentConfig = {
 
 export function GenericTable(
     {
-        caption_text, 
+        captionText, 
         headers, 
         tableBodyRows, 
         tableFooterRow, 
@@ -44,7 +44,7 @@ export function GenericTable(
 
     return (
         <Table>
-            <TableCaption>{caption_text}</TableCaption>
+            <TableCaption>{captionText}</TableCaption>
 
             <TableHeader>
                 {headers && headers.map( header => (
@@ -65,7 +65,6 @@ export function GenericTable(
                                             <TableCell>{row[key]}</TableCell> 
                                         :
                                         <></>
-                        
                                     )
                                 }
                             </TableRow>
@@ -79,7 +78,11 @@ export function GenericTable(
                 <TableRow>
                 {
                     tableFooterRow instanceof Array? 
-                        tableFooterRow.map(cellData => <TableCell>{cellData}</TableCell>)
+                        tableFooterRow.map(cellData => 
+                            <TableCell className="capitalize">
+                                {cellData}
+                            </TableCell>
+                        )
                         :
                         <></>
                 }
@@ -92,7 +95,6 @@ export function GenericTable(
 
 const renderComponent = (componentConfig: ComponentConfig) => {
     const { component: ComponentToRender, props } = componentConfig;
-    console.log(componentConfig)
 
     return <ComponentToRender {...props} />;  
 };
